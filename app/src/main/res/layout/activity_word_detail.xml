@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#C0C0C0">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:id="@+id/etCategory"
+            android:hint="Enter Category"
+            android:gravity="center"
+            android:background="#C0C0C0"
+            android:layout_alignParentTop="false"
+            android:imeOptions="actionDone"
+            android:maxLength="50"
+            android:maxLines="1"
+            android:inputType="textCapSentences"
+            android:cursorVisible="false"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="@string/english_TextView"
+            android:textSize="20sp"
+            android:id="@+id/title_eng"
+            android:background="@color/colorPrimary"
+            android:layout_below="@id/etCategory"
+            android:gravity="center"
+            android:layout_marginTop="5dp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:id="@+id/etText_eng"
+            android:layout_below="@id/title_eng"
+            android:hint="Enter english word"
+            android:gravity="center"
+            android:imeOptions="actionDone"
+            android:maxLines="1"
+            android:maxLength="50"
+            android:inputType="textCapSentences" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="@string/french_TextView"
+            android:textSize="20sp"
+            android:id="@+id/title_fre"
+            android:gravity="center"
+            android:background="@color/colorPrimary"
+
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:id="@+id/etText_fre"
+            android:layout_below="@id/title_fre"
+            android:hint="Enter french word"
+            android:gravity="center"
+            android:imeOptions="actionDone"
+            android:maxLines="1"
+            android:maxLength="50"
+            android:inputType="textCapSentences" />
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:id="@+id/btnSave"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="false"
+            android:layout_below="@id/etText_fre"
+            android:gravity="center"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Show"
+            android:id="@+id/btnShow"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/etText_fre"/>
+
+
+
+         </RelativeLayout>
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            >
+
+                        <android.support.design.widget.BottomNavigationView
+                            android:id="@+id/navigation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:background="?android:attr/windowBackground"
+                            app:menu="@menu/navigation"
+
+                            />
+
+
+        </RelativeLayout>
+
+</RelativeLayout>
