@@ -1,4 +1,4 @@
-package com.example.cyrille.simplelistview;
+package com.example.cyrille.virtualnotebook;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;

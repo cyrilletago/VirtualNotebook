@@ -1,5 +1,5 @@
 
-package com.example.cyrille.simplelistview;
+package com.example.cyrille.virtualnotebook;
 
 import android.content.Context;
 import android.content.Intent;

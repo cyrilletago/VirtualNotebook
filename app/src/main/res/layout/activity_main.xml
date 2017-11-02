@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.cyrille.simplelistview.DisplayDataListView_old">
+    tools:context="com.example.cyrille.virtualnotebook.DisplayDataListView_old">
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="fill_parent"

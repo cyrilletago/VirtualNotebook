@@ -1,4 +1,4 @@
-package com.example.cyrille.simplelistview;
+package com.example.cyrille.virtualnotebook;
 
 import org.junit.Test;
 

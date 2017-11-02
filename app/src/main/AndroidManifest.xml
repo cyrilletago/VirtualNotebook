@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.cyrille.simplelistview">
+    package="com.example.cyrille.virtualnotebook">
 
     <application
         android:allowBackup="true"
@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name="com.example.cyrille.virtualnotebook.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,10 +17,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DisplayDataListView_old"
+            android:name="com.example.cyrille.virtualnotebook.DisplayDataListView_old"
             android:label="@string/title_activity_showdata_listview"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".WordDetail"></activity>
+        <activity android:name="com.example.cyrille.virtualnotebook.WordDetail"></activity>
     </application>
 
 </manifest>
