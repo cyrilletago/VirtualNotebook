@@ -1,6 +1,7 @@
 package com.example.cyrille.virtualnotebook;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -11,13 +12,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class WordDetail extends AppCompatActivity implements View.OnClickListener{
-    ControllerDatabase db =new ControllerDatabase(this);
+public class WordDetail extends AppCompatActivity implements View.OnClickListener {
+    ControllerDatabase db = new ControllerDatabase(this);
     BottomNavigationView navigation;
     SQLiteDatabase database;
     EditText Word_en, Word_fr, Category;
-    Button Submitdatabtn,Showdatabtn;
+    Button Submitdatabtn, Showdatabtn;
     String wordGotEn, wordGotFr, categoryGot;
+    public static String[] extractedData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +30,7 @@ public class WordDetail extends AppCompatActivity implements View.OnClickListene
         Category.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (v.getId() == Category.getId()){
+                if (v.getId() == Category.getId()) {
                     Category.setCursorVisible(true);
                 }
             }
@@ -46,15 +48,14 @@ public class WordDetail extends AppCompatActivity implements View.OnClickListene
         });*/
         Word_fr = (EditText) findViewById(R.id.etText_fre);
 
-        Submitdatabtn= (Button) findViewById(R.id.btnSave);
-        Showdatabtn=(Button) findViewById(R.id.btnShow);
+        Submitdatabtn = (Button) findViewById(R.id.btnSave);
+        Showdatabtn = (Button) findViewById(R.id.btnShow);
         Submitdatabtn.setOnClickListener(this);
         Showdatabtn.setOnClickListener(this);
 
         // Check the status of the selected word. If one was delected, we want to show its details
 
-        if (MainActivity.wordSelected)
-        {
+        if (MainActivity.wordSelected) {
             String categoryWord = getIntent().getStringExtra("CATEGORY_TO_PASS");
             Category.setText(categoryWord);
 
@@ -73,19 +74,18 @@ public class WordDetail extends AppCompatActivity implements View.OnClickListene
     }
 
     @Override
-    public void onClick(View v)
-    {
-        if(v.getId()==R.id.btnSave)
-        {
-            wordGotEn = Word_en.getText().toString();
-            wordGotFr = Word_fr.getText().toString();
-            categoryGot = Category.getText().toString();
+    public void onClick(View v) {
+        if (v.getId() == R.id.btnSave) {
+            wordGotEn = Word_en.getText().toString().trim(); // trim to remove spaces at beginning and end
+            wordGotFr = Word_fr.getText().toString().trim();
+            categoryGot = Category.getText().toString().trim();
 
             if (!isAlpha(wordGotEn) || wordGotEn.isEmpty() ||
-                            !isAlpha(wordGotFr) || wordGotFr.isEmpty() ||
-                                    !isAlpha(categoryGot) || categoryGot.isEmpty())
-            {
-                Toast.makeText(this,"Invalid Entry",Toast.LENGTH_LONG).show();
+                    !isAlpha(wordGotFr) || wordGotFr.isEmpty() ||
+                    !isAlpha(categoryGot) || categoryGot.isEmpty()) {
+                Toast.makeText(this, "Invalid Entry", Toast.LENGTH_LONG).show();
+            }else if(isAlreadyInDatabase(wordGotEn)){
+                Toast.makeText(this, wordGotEn + " already in the database. Edit it.", Toast.LENGTH_LONG).show();
             }else {
                 database = db.getWritableDatabase();
                 database.execSQL("INSERT INTO LanguageDetails(EnglishWord,FrenchWord,Category)VALUES('" + Word_en.getText() + "','" + Word_fr.getText() + "','" + Category.getText() + "')");
@@ -96,24 +96,21 @@ public class WordDetail extends AppCompatActivity implements View.OnClickListene
                 Word_fr.setText("");
                 Category.setText("");
             }
-        }
-        else  if(v.getId()==R.id.btnShow)
-        {
-            Intent intent=new Intent(this,MainActivity.class);
+        } else if (v.getId() == R.id.btnShow) {
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
 
         }
     }
 
-    public boolean isAlpha(String s){
-        String pattern= "^[a-zA-Z]*$";
+    public boolean isAlpha(String s) {
+        String pattern = "^[a-zA-Z ,]*$";
         return s.matches(pattern);
     }
-    public void initInstances()
-    {
+
+    public void initInstances() {
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener()
-        {
+        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 int id = menuItem.getItemId();
@@ -143,4 +140,37 @@ public class WordDetail extends AppCompatActivity implements View.OnClickListene
 
     }
 
+    private boolean isAlreadyInDatabase(String wordToSave) {
+        // We will extract our words into this array
+        for(int i = 0; i < MainActivity.english_list.size(); i++ ) {
+            if (! MainActivity.English_list[i].equals(wordToSave.trim())) {
+            } else {
+                return true;
+            }
+            }
+        return false;
+        /*database = db.getWritableDatabase();
+        Cursor new_cursor = database.rawQuery("SELECT * FROM LanguageDetails WHERE EnglishWord = '" + wordToSave + "'", null);
+        // Extract data into an array of string
+        if (new_cursor.moveToFirst()) {
+
+            String[] columnNames = new_cursor.getColumnNames();
+            extractedData = new String[columnNames.length];
+
+            // Use a loop to fill the array
+            for (int i = 0; i < columnNames.length; i++) {
+
+                // Assume every column is int
+
+                extractedData[i] = new_cursor.getString(new_cursor.getColumnIndex(columnNames[i]));
+            }
+                if (extractedData[1] != wordToSave.trim()) {
+                    Toast.makeText(this, extractedData[1] +  "," + extractedData[2] +  "," + extractedData[3] +  "," + wordToSave , Toast.LENGTH_LONG).show();
+                    return false;
+                }
+
+        }
+
+        return true;*/
+    }
 }

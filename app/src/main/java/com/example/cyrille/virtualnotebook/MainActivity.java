@@ -1,21 +1,24 @@
 
 package com.example.cyrille.virtualnotebook;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
+import com.example.cyrille.virtualnotebook.ControllerDatabase;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -30,11 +33,15 @@ public class MainActivity extends AppCompatActivity{
     public ArrayList<String> Word_en = new ArrayList<String>();
     public ArrayList<String> Word_fr = new ArrayList<String>();
     public ArrayList<String> Category = new ArrayList<String>();
-    public static ArrayList<String> english_list;
-    public static boolean wordSelected = false;
+
     ListView lv;
     ArrayAdapter<String> newListAdapter;
 
+    // Visible everywhere in the app
+    public static ArrayList<String> english_list;
+    public static boolean wordSelected = false;
+    public static String clickedWord = null;
+    public static String[] English_list;
 
 
     @Override
@@ -47,13 +54,15 @@ public class MainActivity extends AppCompatActivity{
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // TextView clickedView = (TextView) view;
+                                // TextView clickedView = (TextView) view;
                 String selectedFromList = (String) lv.getItemAtPosition(position);
+                clickedWord = selectedFromList;
 
                 displayClickedWordDetails(selectedFromList);
             }
         });
         registerForContextMenu(lv);
+
         /*Menu menu = navigation.getMenu();
         MenuItem menuItem = menu.getItem(0);
         menuItem.setChecked(true);*/
@@ -119,27 +128,72 @@ public class MainActivity extends AppCompatActivity{
                 english_list.add(cursor.getString(cursor.getColumnIndex("EnglishWord")));
             } while (cursor.moveToNext());
         }
-        //CustomAdapter ca = new CustomAdapter(this, Id, Word_en, Word_fr, Category);
-        //lv.setAdapter(ca);
+         //CustomAdapter ca = new CustomAdapter(this, english_list);
+         //lv.setAdapter(ca);
         //code to set adapter to populate list
-        newListAdapter = new ArrayAdapter<String>(this, R.layout.layout, english_list);
-        lv.setAdapter(newListAdapter);
+         newListAdapter = new ArrayAdapter<String>(this, R.layout.layout, english_list);
+         lv.setAdapter(newListAdapter);
         cursor.close();
+
+
+        //Update the english list and reset clicked word
+        if(!english_list.isEmpty()) {
+            English_list = new String[english_list.size()];
+            English_list = english_list.toArray(English_list);
+        }
+        clickedWord = null;
+
     }
 
 
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo){
         menu.add(0, v.getId(), 0, "Edit");
         menu.add(0, v.getId(), 0, "Delete");
+        if (v.getId() == R.id.lstvw){
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+            clickedWord = English_list[info.position];
+            menu.setHeaderTitle(String.format("%s Options", clickedWord));
+        }
     }
 
-    public boolean onContextItemSelected(MenuItem item){
-        if(item.getTitle()=="Edit")Toast.makeText(getApplicationContext(), "Edit Clicked", Toast.LENGTH_LONG).show();
-        if(item.getTitle()=="Delete")Toast.makeText(getApplicationContext(), "Delete Clicked", Toast.LENGTH_LONG).show();
+    public boolean onContextItemSelected(final MenuItem item){
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+        if(item.getTitle()=="Edit"){
+            // Toast.makeText(getApplicationContext(), "Edit Clicked", Toast.LENGTH_LONG).show();
+            displayClickedWordDetails(clickedWord);
+        }
+
+        // Case Delete is selected
+        if(item.getTitle()=="Delete"){
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+            alertDialog.setCancelable(false);
+            alertDialog.setMessage(String.format("Delete item %s?",clickedWord));
+            alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    controllerDatabase.deleteSelectedWord(clickedWord);
+
+                    //Update your ArrayList
+                    displayData();
+
+                    // Notify your ListView adapter
+                    // adapter.notifyDataSetChanged();
+                }
+            });
+            alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    clickedWord = null;
+                    dialog.cancel();
+                }
+            });
+            alertDialog.show();
+
+        }
+
         return true;
     }
 
-    private void displayClickedWordDetails(String clickedWord) {
+    public void displayClickedWordDetails(String clickedWord) {
         // We will extract our words into this array
         String[] extractedData;
         Cursor new_cursor = db.rawQuery("SELECT * FROM LanguageDetails WHERE EnglishWord = '" + clickedWord + "'", null);
@@ -170,11 +224,8 @@ public class MainActivity extends AppCompatActivity{
         }
 
         new_cursor.close();
-        // db.close();
+         db.close();
     }
-    public void deleteSelectedWord(String WordToDelete)
-    {
-        
-    }
+
 
 }

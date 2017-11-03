@@ -10,7 +10,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class ControllerDatabase extends SQLiteOpenHelper
 {
-    private static final String DATABASE_NAME="SqliteListviewDB";
+    private static final String DATABASE_NAME = "SqliteListviewDB";
+    public static final String TABLE_NAME = "LanguageDetails";
     public ControllerDatabase(Context applicationcontext) {
         super(applicationcontext, DATABASE_NAME, null,1);
     }
@@ -30,5 +31,18 @@ public class ControllerDatabase extends SQLiteOpenHelper
         query = "DROP TABLE IF EXISTS LanguageDetails";
         db.execSQL(query);
         onCreate(db);
+    }
+
+    public void deleteSelectedWord(String WordToDelete)
+    {
+        //Open the database
+        SQLiteDatabase db = getWritableDatabase();
+
+        //Execute sql query to remove from database
+        //NOTE: When removing by String in SQL, value must be enclosed with ''
+        db.execSQL("DELETE FROM " + TABLE_NAME + " WHERE  EnglishWord = '" + WordToDelete + "'");
+
+        //Close the database
+        db.close();
     }
 }
