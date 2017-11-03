@@ -13,4 +13,6 @@
     <string name="title_test">Test</string>
     <string name="title_category">Category</string>
     <string name="title_add">Add word</string>
+    <string name="quest_msg">What is the french translation of:</string>
+
 </resources>
