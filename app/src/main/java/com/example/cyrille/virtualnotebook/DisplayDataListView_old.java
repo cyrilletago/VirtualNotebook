@@ -44,7 +44,7 @@ public class DisplayDataListView_old extends AppCompatActivity {
                 Category.add(cursor.getString(cursor.getColumnIndex("Category")));
             } while (cursor.moveToNext());
         }
-        CustomAdapter ca = new CustomAdapter(DisplayDataListView_old.this,Id, Word_en, Word_fr, Category);
+        CustomAdapter ca = new CustomAdapter(DisplayDataListView_old.this, Word_en);
         lv.setAdapter(ca);
         //code to set adapter to populate list
         cursor.close();

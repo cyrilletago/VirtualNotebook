@@ -74,8 +74,8 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Save"
-            android:id="@+id/btnSave"
+            android:text="Show"
+            android:id="@+id/btnShow"
             android:layout_centerVertical="true"
             android:layout_alignParentStart="false"
             android:layout_below="@id/etText_fre"
@@ -84,8 +84,8 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Show"
-            android:id="@+id/btnShow"
+            android:text="Save"
+            android:id="@+id/btnSave"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
