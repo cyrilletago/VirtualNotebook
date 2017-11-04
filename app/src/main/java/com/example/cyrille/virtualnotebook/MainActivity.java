@@ -19,7 +19,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 /**
- * Created by cyrille on 29/10/17.
+ *  Created by cyrille on 29/10/17.
  */
 
 public class MainActivity extends AppCompatActivity{
@@ -54,9 +54,6 @@ public class MainActivity extends AppCompatActivity{
             }
         });
         registerForContextMenu(lv);
-        /*Menu menu = navigation.getMenu();
-        MenuItem menuItem = menu.getItem(0);
-        menuItem.setChecked(true);*/
         initInstances();
 
     }

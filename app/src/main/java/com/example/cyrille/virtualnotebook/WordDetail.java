@@ -67,9 +67,7 @@ public class WordDetail extends AppCompatActivity implements View.OnClickListene
 
             MainActivity.wordSelected = false;
         }
-        /*Menu menu = navigation.getMenu();
-        MenuItem menuItem = menu.getItem(1);
-        menuItem.setChecked(true);*/
+
         initInstances();
     }
 
