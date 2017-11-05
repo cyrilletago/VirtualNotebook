@@ -1,23 +1,117 @@
 package com.example.cyrille.virtualnotebook;
 
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.Random;
+
 
 /**
  * Created by dominiquekogue on 11/3/17.
  */
 
-public class Test extends AppCompatActivity {
+public class Test extends AppCompatActivity implements View.OnClickListener {
 
-    CheckBox cb,cb2,cb3;
+    private Random randomGenerator;
+    CheckBox checkbox,checkbox2,checkbox3;
+    Button button_done, button_quit;
+    TextView score_text, word_to_check ;
+    BottomNavigationView navigation;
 
-    protected void appTest(){
+    ControllerDatabase db =new ControllerDatabase(this);
+    SQLiteDatabase database;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_test);
+        checkbox = (CheckBox) findViewById(R.id.choice1);
+        checkbox2 = (CheckBox) findViewById(R.id.choice2);
+        checkbox3 = (CheckBox) findViewById(R.id.choice3);
+
+
+        button_done= (Button) findViewById(R.id.btnDone);
+        button_quit=(Button) findViewById(R.id.btnQuit);
+        button_done.setOnClickListener(this);
+        button_quit.setOnClickListener(this);
+        word_to_check = (TextView) findViewById(R.id.word_to_check);
+        word_to_check.setText(anyItem());
+
+        initInstances();
+    }
+
+    public String anyItem()
+    {
+        int index = randomGenerator.nextInt(MainActivity.english_list.size());
+        String item = MainActivity.english_list.get(index);
+        return item;
+    }
 
 
 
-        cb = (CheckBox) findViewById(R.id.choice1);
-        cb2 = (CheckBox) findViewById(R.id.choice2);
-        cb3 = (CheckBox) findViewById(R.id.choice3);
+    @Override
+    public void onClick(View v)
+    {
+        if(v.getId()==R.id.btnDone)
+        {
+
+        }
+        else  if(v.getId()==R.id.btnQuit)
+        {
+
+        }
+    }
+
+
+
+    public void initInstances()
+    {
+        navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationViewHelp.disableShiftMode(bottomNavigationView);
+        Menu menu = navigation.getMenu();
+        MenuItem menuItem = menu.getItem(2);
+        menuItem.setChecked(true);
+        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener()
+        {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                int id = menuItem.getItemId();
+                switch (id) {
+                    case R.id.navigation_notebook:
+                        //Do some thing here
+                        Intent intent = new Intent(Test.this, MainActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.navigation_add:
+                        //Do some thing here
+                        Intent intent_add = new Intent(Test.this, WordDetail.class);
+                        startActivity(intent_add);
+                        break;
+                    case R.id.navigation_test:
+                        //Do some thing here
+                        // add navigation drawer item onclick method here
+                        break;
+                    case R.id.navigation_cathegory:
+                        //Do some thing here
+                        // add navigation drawer item onclick method here
+                        break;
+                }
+                return false;
+            }
+        });
 
     }
+
 }
