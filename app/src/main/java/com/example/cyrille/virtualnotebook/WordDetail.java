@@ -76,15 +76,18 @@ public class WordDetail extends AppCompatActivity implements View.OnClickListene
     {
         if(v.getId()==R.id.btnSave)
         {
-            wordGotEn = Word_en.getText().toString();
-            wordGotFr = Word_fr.getText().toString();
-            categoryGot = Category.getText().toString();
+            wordGotEn = Word_en.getText().toString().trim();
+            wordGotFr = Word_fr.getText().toString().trim();
+            categoryGot = Category.getText().toString().trim();
 
             if (!isAlpha(wordGotEn) || wordGotEn.isEmpty() ||
                             !isAlpha(wordGotFr) || wordGotFr.isEmpty() ||
                                     !isAlpha(categoryGot) || categoryGot.isEmpty())
             {
                 Toast.makeText(this,"Invalid Entry",Toast.LENGTH_LONG).show();
+
+            }else if(isAlreadyInDatabase(wordGotEn)){
+                  Toast.makeText(this, wordGotEn + " already in the database. Edit it.", Toast.LENGTH_LONG).show();
             }else {
                 database = db.getWritableDatabase();
                 database.execSQL("INSERT INTO LanguageDetails(EnglishWord,FrenchWord,Category)VALUES('" + Word_en.getText() + "','" + Word_fr.getText() + "','" + Category.getText() + "')");
@@ -134,7 +137,8 @@ public class WordDetail extends AppCompatActivity implements View.OnClickListene
                         break;
                     case R.id.navigation_test:
                         //Do some thing here
-                        // add navigation drawer item onclick method here
+                        Intent intent_test = new Intent(WordDetail.this, Test.class);
+                        startActivity(intent_test);
                         break;
                     case R.id.navigation_cathegory:
                         //Do some thing here
@@ -147,4 +151,16 @@ public class WordDetail extends AppCompatActivity implements View.OnClickListene
 
     }
 
+    private boolean isAlreadyInDatabase(String wordToSave) {
+           // We will extract our words into this array
+            for(int i = 0; i < MainActivity.english_list.size(); i++ ) {
+            if (! MainActivity.English_list[i].equals(wordToSave.trim())) {
+                } else {
+                   return true;
+            }
+            }
+        return false;
+    }
 }
+
+

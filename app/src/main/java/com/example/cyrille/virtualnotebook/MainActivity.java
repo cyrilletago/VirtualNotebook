@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity{
 
     // Visible everywhere in the app
     public static ArrayList<String> english_list;
+    public static ArrayList<String> french_list;
     public static boolean wordSelected = false;
     public static String clickedWord = null;
     public static String[] English_list;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         english_list = new ArrayList<String>();
+        french_list = new ArrayList<String>();
         lv = (ListView) findViewById(R.id.lstvw);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -96,7 +98,8 @@ public class MainActivity extends AppCompatActivity{
                         break;
                     case R.id.navigation_test:
                         //Do some thing here
-                        // add navigation drawer item onclick method here
+                        Intent intent_test = new Intent(MainActivity.this, Test.class);
+                        startActivity(intent_test);
                         break;
                     case R.id.navigation_cathegory:
                         //Do some thing here
@@ -126,6 +129,7 @@ public class MainActivity extends AppCompatActivity{
                 // Word_fr.add(cursor.getString(cursor.getColumnIndex("FrenchWord")));
                 // Category.add(cursor.getString(cursor.getColumnIndex("Category")));
                 english_list.add(cursor.getString(cursor.getColumnIndex("EnglishWord")));
+                french_list.add(cursor.getString(cursor.getColumnIndex("FrenchWord")));
             } while (cursor.moveToNext());
         }
          //CustomAdapter ca = new CustomAdapter(this, english_list);

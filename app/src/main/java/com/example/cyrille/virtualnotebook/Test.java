@@ -10,10 +10,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Random;
 
 
@@ -23,11 +24,14 @@ import java.util.Random;
 
 public class Test extends AppCompatActivity implements View.OnClickListener {
 
-    private Random randomGenerator;
+    private Random randomGenerator = new Random();
     CheckBox checkbox,checkbox2,checkbox3;
     Button button_done, button_quit;
     TextView score_text, word_to_check ;
     BottomNavigationView navigation;
+    public ArrayList Temporal_English_list;
+    public ArrayList Temporal_French_list;
+
 
     ControllerDatabase db =new ControllerDatabase(this);
     SQLiteDatabase database;
@@ -46,10 +50,14 @@ public class Test extends AppCompatActivity implements View.OnClickListener {
         button_done.setOnClickListener(this);
         button_quit.setOnClickListener(this);
         word_to_check = (TextView) findViewById(R.id.word_to_check);
-        word_to_check.setText(anyItem());
+        Temporal_French_list = new ArrayList<String>();
+        Temporal_English_list = new ArrayList<String>();
+        //word_to_check.setText(anyItem());
 
+        setCheckboxes();
         initInstances();
     }
+/*
 
     public String anyItem()
     {
@@ -57,6 +65,7 @@ public class Test extends AppCompatActivity implements View.OnClickListener {
         String item = MainActivity.english_list.get(index);
         return item;
     }
+*/
 
 
 
@@ -113,5 +122,54 @@ public class Test extends AppCompatActivity implements View.OnClickListener {
         });
 
     }
+
+    public void setCheckboxes() {
+        if (!MainActivity.english_list.isEmpty()) {
+            // Temporal_English_list = new String[MainActivity.english_list.size()];
+            // Temporal_English_list = MainActivity.english_list.toArray(Temporal_English_list);
+            //MainActivity.english_list = new ArrayList<String>(Temporal_English_list);
+            // MainActivity.french_list = new ArrayList<String>(Temporal_French_list);
+            Temporal_English_list.addAll(MainActivity.english_list);
+            Temporal_French_list.addAll(MainActivity.french_list);
+
+            // Temporal_French_list = new String[MainActivity.french_list.size()];
+            // Temporal_French_list = MainActivity.french_list.toArray(Temporal_French_list);
+
+
+            int tempIndex = randomGenerator.nextInt(MainActivity.english_list.size());
+
+            String englishItem = MainActivity.english_list.get(tempIndex);
+            word_to_check.setText(englishItem);
+
+            int i = randomGenerator.nextInt(3);
+            if (i == 0) {
+                checkbox.setText((String) Temporal_French_list.get(tempIndex));
+                Temporal_French_list.remove(tempIndex);
+                Collections.shuffle(Temporal_French_list);
+                checkbox2.setText((String) Temporal_French_list.get(0));
+                checkbox3.setText((String) Temporal_French_list.get(1));
+            } else if (i == 1) {
+                checkbox2.setText((String) Temporal_French_list.get(tempIndex));
+                Temporal_French_list.remove(tempIndex);
+                Collections.shuffle(Temporal_French_list);
+                checkbox.setText((String) Temporal_French_list.get(0));
+                checkbox3.setText((String) Temporal_French_list.get(1));
+            } else if (i == 2) {
+                checkbox3.setText((String) Temporal_French_list.get(tempIndex));
+                Temporal_French_list.remove(tempIndex);
+                Collections.shuffle(Temporal_French_list);
+                checkbox.setText((String) Temporal_French_list.get(0));
+                checkbox2.setText((String) Temporal_French_list.get(1));
+            }
+
+        }
+    }
+
+   /* public int itemIndex()
+    {
+        int index = randomGenerator.nextInt(Temporal_English_list.size());
+        // String item = MainActivity.english_list.get(index);
+        return index;
+    }*/
 
 }
