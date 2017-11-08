@@ -20,5 +20,6 @@
     <string name="category_five">Transport</string>
     <string name="category_six">Others</string>
     <string name="quest_msg">What is the french translation of:  </string>
+    <string name="test_word">Test word</string>
 
 </resources>

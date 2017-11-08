@@ -43,7 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/word_to_check"
-        android:text="xxxxxxxxx"
+        android:text="@string/test_word"
         android:textSize="19dp"
         android:layout_marginTop="90dp"
         android:layout_alignParentRight="true"
@@ -56,7 +56,6 @@
         android:padding="8dp"
         android:id="@+id/choice1"
         android:layout_marginTop="20dp"
-        android:onClick="selectItem"
         />
     <CheckBox
         android:layout_width="wrap_content"
