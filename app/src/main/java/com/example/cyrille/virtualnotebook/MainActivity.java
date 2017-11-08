@@ -116,7 +116,8 @@ public class MainActivity extends AppCompatActivity{
                         break;
                     case R.id.navigation_cathegory:
                         //Do some thing here
-                        // add navigation drawer item onclick method here
+                        Intent intent_category = new Intent(MainActivity.this, Category.class);
+                        startActivity(intent_category);
                         break;
                 }
                 return false;

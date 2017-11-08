@@ -143,7 +143,8 @@ public class WordDetail extends AppCompatActivity implements View.OnClickListene
                         break;
                     case R.id.navigation_cathegory:
                         //Do some thing here
-                        // add navigation drawer item onclick method here
+                        Intent intent_category = new Intent(WordDetail.this, Category.class);
+                        startActivity(intent_category);
                         break;
                 }
                 return false;

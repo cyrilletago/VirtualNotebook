@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.cyrille.virtualnotebook.MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,11 +17,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.cyrille.virtualnotebook.DisplayDataListView_old"
+            android:name=".DisplayDataListView_old"
             android:label="@string/title_activity_showdata_listview"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.example.cyrille.virtualnotebook.WordDetail"></activity>
-        <activity android:name="com.example.cyrille.virtualnotebook.Test"></activity>
+        <activity android:name=".WordDetail" />
+        <activity android:name=".Test" />
+        <activity android:name=".Category"></activity>
     </application>
 
 </manifest>
