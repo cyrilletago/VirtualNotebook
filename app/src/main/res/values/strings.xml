@@ -13,6 +13,12 @@
     <string name="title_test">Test</string>
     <string name="title_category">Category</string>
     <string name="title_add">Add word</string>
+    <string name="category_one">Fruits</string>
+    <string name="category_two">Animals</string>
+    <string name="category_tree">Education</string>
+    <string name="category_four">Electronics</string>
+    <string name="category_five">Transport</string>
+    <string name="category_six">Others</string>
     <string name="quest_msg">What is the french translation of:  </string>
 
 </resources>
