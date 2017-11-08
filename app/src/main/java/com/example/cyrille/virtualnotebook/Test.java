@@ -1,10 +1,12 @@
 package com.example.cyrille.virtualnotebook;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout.LayoutParams;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,7 +36,7 @@ public class Test extends AppCompatActivity implements View.OnClickListener {
     private Random randomGenerator = new Random();
     CheckBox checkbox,checkbox2,checkbox3;
     Button button_done, button_quit;
-    TextView score_text, word_to_check, score, popupText;
+    TextView score_text, word_to_check, score;
     BottomNavigationView navigation;
     public ArrayList Temporal_English_list;
     public ArrayList Temporal_French_list;
@@ -59,7 +62,6 @@ public class Test extends AppCompatActivity implements View.OnClickListener {
         word_to_check = (TextView) findViewById(R.id.word_to_check);
         score_text = (TextView) findViewById(R.id.score_text);
         score = (TextView) findViewById(R.id.score);
-        popupText = (TextView) findViewById(R.id.popupText);
 
         // indexFromIntent = getIntent().getIntExtra("PREPARED_WORD_FOR_TEST", 0);
         indexFromIntent = MainActivity.indexCheckWordlist.get(MainActivity.testRound-1);
@@ -93,9 +95,6 @@ public class Test extends AppCompatActivity implements View.OnClickListener {
                             {
                                 MainActivity.testScore ++;
                                 Intent intent_test1 = new Intent(getBaseContext(), Test.class);
-                                // intent_test1.putExtra("PREPARED_WORD_FOR_TEST",
-                                //        MainActivity.indexCheckWordlist.get(MainActivity.testRound));
-                                // MainActivity.testRound ++;
                                 startActivity(intent_test1);
                             } else
                                 {
@@ -193,11 +192,13 @@ public class Test extends AppCompatActivity implements View.OnClickListener {
     {
         if(v.getId()==R.id.btnDone)
         {
-
+            Intent intent = new Intent(getBaseContext(), MainActivity.class);
+            startActivity(intent);
         }
         else  if(v.getId()==R.id.btnQuit)
         {
-
+            Intent intent = new Intent(getBaseContext(), MainActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -244,21 +245,6 @@ public class Test extends AppCompatActivity implements View.OnClickListener {
 
     public void setCheckboxes( int tempIndex) {
         if (MainActivity.english_list.size() > 3) {
-             //   !MainActivity.english_list.isEmpty())
-            // Temporal_English_list = new String[MainActivity.english_list.size()];
-            // Temporal_English_list = MainActivity.english_list.toArray(Temporal_English_list);
-            //MainActivity.english_list = new ArrayList<String>(Temporal_English_list);
-            // MainActivity.french_list = new ArrayList<String>(Temporal_French_list);
-
-
-            // Temporal_French_list = new String[MainActivity.french_list.size()];
-            // Temporal_French_list = MainActivity.french_list.toArray(Temporal_French_list);
-
-
-
-            // int tempIndex = randomGenerator.nextInt(MainActivity.english_list.size());
-
-
 
             int i = randomGenerator.nextInt(3);
             if (i == 0) {
@@ -286,29 +272,33 @@ public class Test extends AppCompatActivity implements View.OnClickListener {
 
     public void handlePopUp()
     {
-        LayoutInflater layoutInflater
-                = (LayoutInflater)getBaseContext()
-                .getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = layoutInflater.inflate(R.layout.popup, null);
-        final PopupWindow popupWindow = new PopupWindow(
-                popupView,
-                LayoutParams.WRAP_CONTENT,
-                LayoutParams.WRAP_CONTENT);
+        score.setText(MainActivity.testScore +"/5");
+        Toast.makeText(this, "Test Completed \n Score : " + MainActivity.testScore, Toast.LENGTH_LONG).show();
+        buildDialog();
+    }
 
-
-
-        Button btnDismiss = (Button)popupView.findViewById(R.id.dismissPopup);
-        btnDismiss.setOnClickListener(new Button.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Intent intent = new Intent(Test.this, MainActivity.class);
-                startActivity(intent);
-                popupWindow.dismiss();
-            }});
-        popupWindow.showAsDropDown(checkbox, 50, -30);
-        popupText.setText("Test Completed \n Score : " + MainActivity.testScore);
+    private void buildDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Test Completed")
+                .setMessage("Score : " + MainActivity.testScore +"/5" + "\n You are improving your french skills. " +
+                        "\n Retake Test?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        MainActivity.testScore = 0;
+                        MainActivity.testRound = 0;
+                        Intent intent_test1 = new Intent(getBaseContext(), Test.class);
+                        startActivity(intent_test1);
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                        startActivity(intent);
+                        dialog.dismiss();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .show();
     }
 
 
