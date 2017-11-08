@@ -138,6 +138,7 @@ public class WordDetail extends AppCompatActivity implements View.OnClickListene
                     case R.id.navigation_test:
                         //Do some thing here
                         Intent intent_test = new Intent(WordDetail.this, Test.class);
+                        // intent_test.putExtra("PREPARED_WORD_FOR_TEST", MainActivity.indexCheckWordlist.get(0));
                         startActivity(intent_test);
                         break;
                     case R.id.navigation_cathegory:

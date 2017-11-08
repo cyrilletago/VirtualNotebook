@@ -9,8 +9,10 @@ import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,6 +22,8 @@ import android.widget.Toast;
 import com.example.cyrille.virtualnotebook.ControllerDatabase;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by cyrille on 29/10/17.
@@ -43,6 +47,9 @@ public class MainActivity extends AppCompatActivity{
     public static boolean wordSelected = false;
     public static String clickedWord = null;
     public static String[] English_list;
+    public static List<Integer> indexCheckWordlist;
+    public static int testRound;
+    public static int testScore;
 
 
     @Override
@@ -51,6 +58,8 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
         english_list = new ArrayList<String>();
         french_list = new ArrayList<String>();
+        testRound = 0;
+        testScore = 0;
         lv = (ListView) findViewById(R.id.lstvw);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -64,11 +73,11 @@ public class MainActivity extends AppCompatActivity{
             }
         });
         registerForContextMenu(lv);
-
-        /*Menu menu = navigation.getMenu();
-        MenuItem menuItem = menu.getItem(0);
-        menuItem.setChecked(true);*/
         initInstances();
+
+        // ==============UPDATE WORD FOR THE TEST=================
+        indexCheckWordlist = new ArrayList<>();
+
 
     }
 
@@ -76,6 +85,7 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onResume() {
         displayData();
+        testRound = 0;
         super.onResume();
     }
 
@@ -83,6 +93,8 @@ public class MainActivity extends AppCompatActivity{
 
     public void initInstances() {
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationViewHelp.disableShiftMode(bottomNavigationView);
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener()
         {
             @Override
@@ -99,6 +111,7 @@ public class MainActivity extends AppCompatActivity{
                     case R.id.navigation_test:
                         //Do some thing here
                         Intent intent_test = new Intent(MainActivity.this, Test.class);
+                        // intent_test.putExtra("PREPARED_WORD_FOR_TEST", indexCheckWordlist.get(0));
                         startActivity(intent_test);
                         break;
                     case R.id.navigation_cathegory:
@@ -132,8 +145,6 @@ public class MainActivity extends AppCompatActivity{
                 french_list.add(cursor.getString(cursor.getColumnIndex("FrenchWord")));
             } while (cursor.moveToNext());
         }
-         //CustomAdapter ca = new CustomAdapter(this, english_list);
-         //lv.setAdapter(ca);
         //code to set adapter to populate list
          newListAdapter = new ArrayAdapter<String>(this, R.layout.layout, english_list);
          lv.setAdapter(newListAdapter);
@@ -146,6 +157,12 @@ public class MainActivity extends AppCompatActivity{
             English_list = english_list.toArray(English_list);
         }
         clickedWord = null;
+        for (int i=0; i<english_list.size(); i++) {
+            indexCheckWordlist.add(i);
+        }
+        //and here is the point
+        Collections.shuffle(indexCheckWordlist);
+        //============================================================
 
     }
 
