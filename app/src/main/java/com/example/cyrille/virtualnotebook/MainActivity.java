@@ -35,10 +35,12 @@ import java.util.Map;
  * Created by cyrille on 29/10/17.
  */
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     BottomNavigationView navigation;
     ControllerDatabase controllerDatabase = new ControllerDatabase(this);
     SQLiteDatabase db;
+    public static LinkedHashMap<String, Integer> mapIndex;
+
     public ArrayList<String> Id = new ArrayList<String>();
     public ArrayList<String> Word_en = new ArrayList<String>();
     public ArrayList<String> Word_fr = new ArrayList<String>();
@@ -46,7 +48,6 @@ public class MainActivity extends AppCompatActivity{
 
 
     ListView lv;
-    TextView sv;//mychanges
     ArrayAdapter<String> newListAdapter;
 
     // Visible everywhere in the app
@@ -71,8 +72,6 @@ public class MainActivity extends AppCompatActivity{
         lv = (ListView) findViewById(R.id.lstvw);
 
 
-        sv = (TextView) findViewById(R.id.side_index);//changes
-
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -90,14 +89,17 @@ public class MainActivity extends AppCompatActivity{
         // ==============UPDATE WORD FOR THE TEST=================
         indexCheckWordlist = new ArrayList<>();
 
+
+
     }
-
-
 
     @Override
     protected void onResume() {
         displayData();
+
         testRound = 0;
+        getIndexList(English_list);
+        displayIndex();
         super.onResume();
     }
 
@@ -177,8 +179,8 @@ public class MainActivity extends AppCompatActivity{
         Collections.shuffle(indexCheckWordlist);
         //============================================================
 
-    }
 
+    }
 
 
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo){
@@ -263,5 +265,33 @@ public class MainActivity extends AppCompatActivity{
          db.close();
     }
 
+    private void getIndexList(String[] English_list) {
+        mapIndex = new LinkedHashMap< String, Integer>();
+        for (int j = 0; j < English_list.length; j++) {
+            String Eng_list = English_list[j];
+            String index = Eng_list.substring(0, 1);
+
+            if (mapIndex.get(index) == null)
+                mapIndex.put(index, j);
+        }
+    }
+
+    private void displayIndex() {
+        LinearLayout indexLayout = (LinearLayout) findViewById(R.id.side_index);
+
+        TextView textView;
+        List<String> indexList = new ArrayList<String>(mapIndex.keySet());
+        for (String index : indexList) {
+            textView = (TextView) getLayoutInflater().inflate(R.layout.side_view, null);
+            textView.setText(index);
+            textView.setOnClickListener(this);
+            indexLayout.addView(textView);
+        }
+    }
+
+    public void onClick(View view) {
+        TextView selectedIndex = (TextView) view;
+        lv.setSelection(mapIndex.get(selectedIndex.getText()));
+    }
 
 }
