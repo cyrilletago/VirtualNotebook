@@ -1,25 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:baselineAligned="false"
     tools:context="com.example.cyrille.virtualnotebook.DisplayDataListView_old">
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:id="@+id/frame_layout">
+        android:id="@+id/frame_layout"
+        >
 
             <ListView
                 android:id="@+id/lstvw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
                 android:scrollbars="vertical"
                 android:layout_below="@+id/toolbar"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
     </FrameLayout>
+
+    <TextView
+    android:id="@+id/side_index"
+    android:layout_width="50dp"
+    android:layout_height="match_parent"
+    android:layout_alignParentRight="true"
+    android:background="#B0B0B0"
+    />
+
+
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="wrap_content"
@@ -33,4 +45,5 @@
 
 
 
-</android.support.design.widget.CoordinatorLayout>
+
+</RelativeLayout>

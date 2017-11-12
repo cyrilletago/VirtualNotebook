@@ -20,6 +20,8 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -27,12 +29,13 @@ import java.util.List;
 import java.util.Random;
 
 
+
 /**
  * Created by dominiquekogue on 11/3/17.
  */
 
-public class Test extends AppCompatActivity implements View.OnClickListener {
 
+public class Test extends AppCompatActivity implements View.OnClickListener {
     private Random randomGenerator = new Random();
     CheckBox checkbox,checkbox2,checkbox3;
     Button button_done, button_quit;
@@ -234,7 +237,8 @@ public class Test extends AppCompatActivity implements View.OnClickListener {
                         break;
                     case R.id.navigation_cathegory:
                         //Do some thing here
-                        // add navigation drawer item onclick method here
+                        Intent intent_test = new Intent(Test.this, Category.class);
+                        startActivity(intent_test);
                         break;
                 }
                 return false;

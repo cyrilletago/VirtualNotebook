@@ -68,15 +68,15 @@
         android:checked="false"
         />
     <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/choice2"
-        android:text=""
-        android:padding="8dp"
-        android:id="@+id/choice3"
-        android:layout_marginTop="0dp"
-        android:checked="false"
-        />
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/choice2"
+    android:text=""
+    android:padding="8dp"
+    android:id="@+id/choice3"
+    android:layout_marginTop="0dp"
+    android:checked="false"
+    />
 
     <RelativeLayout
             android:layout_width="match_parent"

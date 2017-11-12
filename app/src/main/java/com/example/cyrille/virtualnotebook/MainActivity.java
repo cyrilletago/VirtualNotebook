@@ -1,6 +1,7 @@
 
 package com.example.cyrille.virtualnotebook;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -17,13 +18,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.example.cyrille.virtualnotebook.ControllerDatabase;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by cyrille on 29/10/17.
@@ -38,7 +44,9 @@ public class MainActivity extends AppCompatActivity{
     public ArrayList<String> Word_fr = new ArrayList<String>();
     public ArrayList<String> Category = new ArrayList<String>();
 
+
     ListView lv;
+    TextView sv;//mychanges
     ArrayAdapter<String> newListAdapter;
 
     // Visible everywhere in the app
@@ -62,10 +70,13 @@ public class MainActivity extends AppCompatActivity{
         testScore = 0;
         lv = (ListView) findViewById(R.id.lstvw);
 
+
+        sv = (TextView) findViewById(R.id.side_index);//changes
+
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                // TextView clickedView = (TextView) view;
+                                //TextView clickedView = (TextView) view;
                 String selectedFromList = (String) lv.getItemAtPosition(position);
                 clickedWord = selectedFromList;
 
@@ -75,11 +86,12 @@ public class MainActivity extends AppCompatActivity{
         registerForContextMenu(lv);
         initInstances();
 
+
         // ==============UPDATE WORD FOR THE TEST=================
         indexCheckWordlist = new ArrayList<>();
 
-
     }
+
 
 
     @Override
@@ -168,6 +180,7 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
+
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo){
         menu.add(0, v.getId(), 0, "Edit");
         menu.add(0, v.getId(), 0, "Delete");
@@ -214,6 +227,7 @@ public class MainActivity extends AppCompatActivity{
 
         return true;
     }
+
 
     public void displayClickedWordDetails(String clickedWord) {
         // We will extract our words into this array
