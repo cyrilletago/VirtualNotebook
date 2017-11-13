@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.Locale;
@@ -33,7 +35,7 @@ public class WordDetail extends AppCompatActivity implements View.OnClickListene
         setContentView(R.layout.activity_word_detail);
         b1 = (ImageView)findViewById(R.id.pronunciation);
 
-        Category = (EditText) findViewById(R.id.etCategory);
+       /* Category = (EditText) findViewById(R.id.etCategory);
         Category.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,7 +43,14 @@ public class WordDetail extends AppCompatActivity implements View.OnClickListene
                     Category.setCursorVisible(true);
                 }
             }
-        });
+        });*/
+
+        Spinner mySpinner = (Spinner) findViewById(R.id.etCategory);
+
+        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(WordDetail.this,
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.names));
+        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mySpinner.setAdapter(myAdapter);
         Word_en = (EditText) findViewById(R.id.etText_eng);
 
         /*Word_en.setOnEditorActionListener(new TextView.OnEditorActionListener() {

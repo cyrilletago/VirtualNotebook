@@ -9,19 +9,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <EditText
+        <Spinner
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:id="@+id/etCategory"
-            android:hint="Enter Category"
-            android:gravity="center"
+            android:gravity="center_horizontal"
             android:background="#C0C0C0"
             android:layout_alignParentTop="false"
             android:imeOptions="actionDone"
-            android:maxLength="50"
-            android:maxLines="1"
-            android:inputType="textCapSentences"
-            android:cursorVisible="false"/>
+            />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="30dp"
