@@ -25,12 +25,6 @@ public class Category extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
     public void initInstances()
     {
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
