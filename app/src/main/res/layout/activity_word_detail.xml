@@ -73,23 +73,34 @@
 
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:text="Show"
             android:id="@+id/btnShow"
-            android:layout_centerVertical="true"
             android:layout_alignParentStart="false"
             android:layout_below="@id/etText_fre"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:layout_alignBottom="@+id/btnSave"
+            android:layout_marginLeft="10dp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_jog_dial_sound_on"
+            android:id="@+id/pronunciation"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/etText_fre"
+            android:foregroundGravity="center_horizontal" />
 
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:text="Save"
             android:id="@+id/btnSave"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_below="@id/etText_fre"/>
+            android:layout_below="@id/etText_fre"
+            android:layout_marginRight="10dp"/>
 
 
 
