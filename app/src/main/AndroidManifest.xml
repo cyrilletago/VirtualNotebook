@@ -23,6 +23,7 @@
         <activity android:name=".WordDetail" />
         <activity android:name=".Test" />
         <activity android:name=".Category"></activity>
+        <activity android:name=".CategoryChosen"></activity>
     </application>
 
 </manifest>

@@ -4,28 +4,23 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout.LayoutParams;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
+
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 
 
@@ -66,7 +61,6 @@ public class Test extends AppCompatActivity implements View.OnClickListener {
         score_text = (TextView) findViewById(R.id.score_text);
         score = (TextView) findViewById(R.id.score);
 
-        // indexFromIntent = getIntent().getIntExtra("PREPARED_WORD_FOR_TEST", 0);
         indexFromIntent = MainActivity.indexCheckWordlist.get(MainActivity.testRound-1);
         String englishItem = MainActivity.english_list.get(indexFromIntent);
         word_to_check.setText(englishItem);
@@ -102,9 +96,6 @@ public class Test extends AppCompatActivity implements View.OnClickListener {
                             } else
                                 {
                                     Intent intent_test1 = new Intent(getBaseContext(), Test.class);
-                                    // intent_test1.putExtra("PREPARED_WORD_FOR_TEST",
-                                    //        MainActivity.indexCheckWordlist.get(MainActivity.testRound));
-                                    // MainActivity.testRound ++;
                                     startActivity(intent_test1);
                                 }
                         } else { //Post the test results
@@ -129,16 +120,10 @@ public class Test extends AppCompatActivity implements View.OnClickListener {
                         {
                             MainActivity.testScore ++;
                             Intent intent_test1 = new Intent(getBaseContext(), Test.class);
-                            // intent_test1.putExtra("PREPARED_WORD_FOR_TEST",
-                            //        MainActivity.indexCheckWordlist.get(MainActivity.testRound));
-                            // MainActivity.testRound ++;
                             startActivity(intent_test1);
                         } else
                         {
                             Intent intent_test1 = new Intent(getBaseContext(), Test.class);
-                            // intent_test1.putExtra("PREPARED_WORD_FOR_TEST",
-                            //        MainActivity.indexCheckWordlist.get(MainActivity.testRound));
-                            // MainActivity.testRound ++;
                             startActivity(intent_test1);
                         }
                     } else { //Post the test results
@@ -163,16 +148,10 @@ public class Test extends AppCompatActivity implements View.OnClickListener {
                          {
                              MainActivity.testScore ++;
                              Intent intent_test1 = new Intent(getBaseContext(), Test.class);
-                             // intent_test1.putExtra("PREPARED_WORD_FOR_TEST",
-                             //        MainActivity.indexCheckWordlist.get(MainActivity.testRound));
-                             // MainActivity.testRound ++;
                              startActivity(intent_test1);
                          } else
                          {
                              Intent intent_test1 = new Intent(getBaseContext(), Test.class);
-                             // intent_test1.putExtra("PREPARED_WORD_FOR_TEST",
-                                     // MainActivity.indexCheckWordlist.get(MainActivity.testRound));
-                             // MainActivity.testRound ++;
                              startActivity(intent_test1);
                          }
                      } else { //Post the test results

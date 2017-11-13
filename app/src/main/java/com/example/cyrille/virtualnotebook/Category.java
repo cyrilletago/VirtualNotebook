@@ -6,24 +6,77 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
-//import com.example.cyrille.simplelistview.R;
+public class Category extends AppCompatActivity implements View.OnClickListener{
 
-public class Category extends AppCompatActivity {
-
-    TextView category1, category2, category3, category4, category5, category6;
+    TextView categoryFruits, categoryAnimals, categoryEducation, categoryElectronics, categoryTransport, categoryOthers;
     BottomNavigationView navigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
+        categoryFruits = ( TextView) findViewById(R.id.categoryFruits);
+        categoryFruits.setOnClickListener(this);
+
+        categoryAnimals = ( TextView) findViewById(R.id.categoryAnimal);
+        categoryAnimals.setOnClickListener(this);
+
+        categoryEducation = ( TextView) findViewById(R.id.categoryEdu);
+        categoryEducation.setOnClickListener(this);
+
+        categoryElectronics = ( TextView) findViewById(R.id.categoryElec);
+        categoryElectronics.setOnClickListener(this);
+
+        categoryTransport = ( TextView) findViewById(R.id.categoryTrans);
+        categoryTransport.setOnClickListener(this);
+
+        categoryOthers = ( TextView) findViewById(R.id.categoryOthers);
+        categoryOthers.setOnClickListener(this);
 
         initInstances();
     }
 
 
+    @Override
+    public void onClick(View view) {
+        if(view.getId()==R.id.categoryFruits)
+        {
+            Intent intent = new Intent(getBaseContext(), CategoryChosen.class);
+            intent.putExtra("CATEGORY_TO_BE_OPENED", "Fruit");
+            startActivity(intent);
+        }
+        else  if(view.getId()==R.id.categoryAnimal)
+        {
+            Intent intent=new Intent(getBaseContext(), CategoryChosen.class);
+            intent.putExtra("CATEGORY_TO_BE_OPENED", "Animal");
+            startActivity(intent);
+        }
+        else  if(view.getId()==R.id.categoryEdu)
+        {
+            Intent intent=new Intent(getBaseContext(), CategoryChosen.class);
+            intent.putExtra("CATEGORY_TO_BE_OPENED", "Education");
+            startActivity(intent);
+        }else  if(view.getId()==R.id.categoryElec)
+        {
+            Intent intent=new Intent(getBaseContext(), CategoryChosen.class);
+            intent.putExtra("CATEGORY_TO_BE_OPENED", "Electronic");
+            startActivity(intent);
+        }else  if(view.getId()==R.id.categoryTrans)
+        {
+            Intent intent=new Intent(getBaseContext(), CategoryChosen.class);
+            intent.putExtra("CATEGORY_TO_BE_OPENED", "Transport");
+            startActivity(intent);
+        }else  if(view.getId()==R.id.categoryOthers)
+        {
+            Intent intent=new Intent(getBaseContext(), CategoryChosen.class);
+            intent.putExtra("CATEGORY_TO_BE_OPENED", "Other");
+            startActivity(intent);
+        }
+
+    }
 
     public void initInstances()
     {
@@ -40,22 +93,18 @@ public class Category extends AppCompatActivity {
                 int id = menuItem.getItemId();
                 switch (id) {
                     case R.id.navigation_notebook:
-                        //Do some thing here
                         Intent intent = new Intent(Category.this, MainActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.navigation_add:
-                        //Do some thing here
                         Intent intent_add = new Intent(Category.this, WordDetail.class);
                         startActivity(intent_add);
                         break;
                     case R.id.navigation_test:
-                        //Do some thing here
                         Intent intent_test = new Intent(Category.this, Test.class);
                         startActivity(intent_test);
                         break;
                     case R.id.navigation_cathegory:
-                        //Do some thing here
                         // add navigation drawer item onclick method here
                         break;
                 }

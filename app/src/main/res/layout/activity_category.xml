@@ -27,7 +27,8 @@
             android:textStyle="bold"
             android:textSize="20sp"
             android:textColor="#ffffff"
-            android:id="@+id/category1"
+            android:id="@+id/categoryFruits"
+            android:clickable="true"
             />
 
         <TextView
@@ -41,7 +42,8 @@
             android:textStyle="bold"
             android:textSize="20sp"
             android:textColor="#ffffff"
-            android:id="@+id/category2"/>
+            android:id="@+id/categoryAnimal"
+            android:clickable="true"/>
 
         <TextView
             android:layout_width="0dp"
@@ -54,7 +56,8 @@
             android:textStyle="bold"
             android:textSize="20sp"
             android:textColor="#ffffff"
-            android:id="@+id/category3"/>
+            android:id="@+id/categoryEdu"
+            android:clickable="true"/>
 
         <TextView
             android:layout_width="0dp"
@@ -67,7 +70,8 @@
             android:textStyle="bold"
             android:textSize="20sp"
             android:textColor="#ffffff"
-            android:id="@+id/category4"/>
+            android:id="@+id/categoryElec"
+            android:clickable="true"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="150dp"
@@ -79,7 +83,8 @@
             android:textStyle="bold"
             android:textSize="20sp"
             android:textColor="#ffffff"
-            android:id="@+id/category5"/>
+            android:id="@+id/categoryTrans"
+            android:clickable="true"/>
 
         <TextView
             android:layout_width="0dp"
@@ -92,7 +97,8 @@
             android:textStyle="bold"
             android:textSize="20sp"
             android:textColor="#ffffff"
-            android:id="@+id/category6"/>
+            android:id="@+id/categoryOthers"
+            android:clickable="true"/>
 
 
     </GridLayout>
