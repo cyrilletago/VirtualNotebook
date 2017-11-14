@@ -21,7 +21,7 @@
             android:label="@string/title_activity_showdata_listview"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".WordDetail" />
-        <activity android:name=".Test" />
+        <activity android:name=".LanguageQuiz" />
         <activity android:name=".Category"></activity>
         <activity android:name=".CategoryChosen"></activity>
     </application>

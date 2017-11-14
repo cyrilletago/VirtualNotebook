@@ -15,8 +15,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
-import android.widget.Toast;
-
 
 
 import java.util.ArrayList;
@@ -30,7 +28,7 @@ import java.util.Random;
  */
 
 
-public class Test extends AppCompatActivity implements View.OnClickListener {
+public class LanguageQuiz extends AppCompatActivity implements View.OnClickListener {
     private Random randomGenerator = new Random();
     CheckBox checkbox,checkbox2,checkbox3;
     Button button_done, button_quit;
@@ -91,11 +89,11 @@ public class Test extends AppCompatActivity implements View.OnClickListener {
                             if (checkbox.getText().equals(MainActivity.french_list.get(indexFromIntent)))
                             {
                                 MainActivity.testScore ++;
-                                Intent intent_test1 = new Intent(getBaseContext(), Test.class);
+                                Intent intent_test1 = new Intent(getBaseContext(), LanguageQuiz.class);
                                 startActivity(intent_test1);
                             } else
                                 {
-                                    Intent intent_test1 = new Intent(getBaseContext(), Test.class);
+                                    Intent intent_test1 = new Intent(getBaseContext(), LanguageQuiz.class);
                                     startActivity(intent_test1);
                                 }
                         } else { //Post the test results
@@ -119,11 +117,11 @@ public class Test extends AppCompatActivity implements View.OnClickListener {
                         if (checkbox2.getText().equals(MainActivity.french_list.get(indexFromIntent)))
                         {
                             MainActivity.testScore ++;
-                            Intent intent_test1 = new Intent(getBaseContext(), Test.class);
+                            Intent intent_test1 = new Intent(getBaseContext(), LanguageQuiz.class);
                             startActivity(intent_test1);
                         } else
                         {
-                            Intent intent_test1 = new Intent(getBaseContext(), Test.class);
+                            Intent intent_test1 = new Intent(getBaseContext(), LanguageQuiz.class);
                             startActivity(intent_test1);
                         }
                     } else { //Post the test results
@@ -147,11 +145,11 @@ public class Test extends AppCompatActivity implements View.OnClickListener {
                          if (checkbox3.getText().equals(MainActivity.french_list.get(indexFromIntent)))
                          {
                              MainActivity.testScore ++;
-                             Intent intent_test1 = new Intent(getBaseContext(), Test.class);
+                             Intent intent_test1 = new Intent(getBaseContext(), LanguageQuiz.class);
                              startActivity(intent_test1);
                          } else
                          {
-                             Intent intent_test1 = new Intent(getBaseContext(), Test.class);
+                             Intent intent_test1 = new Intent(getBaseContext(), LanguageQuiz.class);
                              startActivity(intent_test1);
                          }
                      } else { //Post the test results
@@ -202,12 +200,12 @@ public class Test extends AppCompatActivity implements View.OnClickListener {
                 switch (id) {
                     case R.id.navigation_notebook:
                         //Do some thing here
-                        Intent intent = new Intent(Test.this, MainActivity.class);
+                        Intent intent = new Intent(LanguageQuiz.this, MainActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.navigation_add:
                         //Do some thing here
-                        Intent intent_add = new Intent(Test.this, WordDetail.class);
+                        Intent intent_add = new Intent(LanguageQuiz.this, WordDetail.class);
                         startActivity(intent_add);
                         break;
                     case R.id.navigation_test:
@@ -216,7 +214,7 @@ public class Test extends AppCompatActivity implements View.OnClickListener {
                         break;
                     case R.id.navigation_cathegory:
                         //Do some thing here
-                        Intent intent_test = new Intent(Test.this, Category.class);
+                        Intent intent_test = new Intent(LanguageQuiz.this, Category.class);
                         startActivity(intent_test);
                         break;
                 }
@@ -256,20 +254,20 @@ public class Test extends AppCompatActivity implements View.OnClickListener {
     public void handlePopUp()
     {
         score.setText(MainActivity.testScore +"/5");
-        // Toast.makeText(this, "Test Completed \n Score : " + MainActivity.testScore, Toast.LENGTH_LONG).show();
+        // Toast.makeText(this, "LanguageQuiz Completed \n Score : " + MainActivity.testScore, Toast.LENGTH_LONG).show();
         buildDialog();
     }
 
     private void buildDialog() {
         new AlertDialog.Builder(this)
-                .setTitle("Test Completed")
+                .setTitle("LanguageQuiz Completed")
                 .setMessage("Score : " + MainActivity.testScore +"/5" + "\n You are improving your french skills. " +
-                        "\n Retake Test?")
+                        "\n Retake LanguageQuiz?")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         MainActivity.testScore = 0;
                         MainActivity.testRound = 0;
-                        Intent intent_test1 = new Intent(getBaseContext(), Test.class);
+                        Intent intent_test1 = new Intent(getBaseContext(), LanguageQuiz.class);
                         startActivity(intent_test1);
                     }
                 })

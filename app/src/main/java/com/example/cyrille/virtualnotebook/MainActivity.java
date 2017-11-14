@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         startActivity(intent_add);
                         break;
                     case R.id.navigation_test:
-                        Intent intent_test = new Intent(MainActivity.this, Test.class);
+                        Intent intent_test = new Intent(MainActivity.this, LanguageQuiz.class);
                         startActivity(intent_test);
                         break;
                     case R.id.navigation_cathegory:

@@ -101,7 +101,7 @@ public class Category extends AppCompatActivity implements View.OnClickListener{
                         startActivity(intent_add);
                         break;
                     case R.id.navigation_test:
-                        Intent intent_test = new Intent(Category.this, Test.class);
+                        Intent intent_test = new Intent(Category.this, LanguageQuiz.class);
                         startActivity(intent_test);
                         break;
                     case R.id.navigation_cathegory:

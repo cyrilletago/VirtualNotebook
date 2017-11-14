@@ -149,10 +149,11 @@ public class WordDetail extends AppCompatActivity implements View.OnClickListene
             wordGotFr = Word_fr.getText().toString().trim();
             // categoryGot = Category.getText().toString().trim();
             categoryGot = mySpinner.getSelectedItem().toString();
+            Validators validators = new Validators();
 
-            if (!isAlpha(wordGotEn) || wordGotEn.isEmpty() ||
-                            !isAlpha(wordGotFr) || wordGotFr.isEmpty() ||
-                                    !isAlpha(categoryGot) || mySpinner.getSelectedItemPosition() == 0)
+            if (!validators.isAlpha(wordGotEn) || wordGotEn.isEmpty() ||
+                            !validators.isAlpha(wordGotFr) || wordGotFr.isEmpty() ||
+                                    !validators.isAlpha(categoryGot) || mySpinner.getSelectedItemPosition() == 0)
             {
                 Toast.makeText(this,"Invalid Entry: Make sure you select a category",Toast.LENGTH_LONG).show();
 
@@ -183,10 +184,6 @@ public class WordDetail extends AppCompatActivity implements View.OnClickListene
     }
 
 
-    public boolean isAlpha(String s){
-        String pattern= "^[a-zA-Z]*$";
-        return s.matches(pattern);
-    }
     public void initInstances()
     {
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -209,7 +206,7 @@ public class WordDetail extends AppCompatActivity implements View.OnClickListene
                     case R.id.navigation_add:
                         break;
                     case R.id.navigation_test:
-                        Intent intent_test = new Intent(WordDetail.this, Test.class);
+                        Intent intent_test = new Intent(WordDetail.this, LanguageQuiz.class);
                         // intent_test.putExtra("PREPARED_WORD_FOR_TEST", MainActivity.indexCheckWordlist.get(0));
                         startActivity(intent_test);
                         break;
