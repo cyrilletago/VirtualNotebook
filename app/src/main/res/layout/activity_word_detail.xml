@@ -39,7 +39,8 @@
             android:imeOptions="actionDone"
             android:maxLines="1"
             android:maxLength="50"
-            android:inputType="textCapSentences" />
+            android:inputType="textCapSentences"
+            android:cursorVisible="false"/>
 
 
         <TextView

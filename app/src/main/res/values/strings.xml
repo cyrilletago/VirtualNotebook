@@ -24,11 +24,11 @@
 
 
     <string-array name="names">
-        <item>Category</item>
-        <item>Animals</item>
+        <item>Choose a Category</item>
+        <item>Animal</item>
         <item>Education</item>
         <item>Electronic</item>
-        <item>Fruits</item>
+        <item>Fruit</item>
         <item>Media</item>
         <item>Transport</item>
         <item>Other</item>

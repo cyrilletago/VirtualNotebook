@@ -256,7 +256,7 @@ public class Test extends AppCompatActivity implements View.OnClickListener {
     public void handlePopUp()
     {
         score.setText(MainActivity.testScore +"/5");
-        Toast.makeText(this, "Test Completed \n Score : " + MainActivity.testScore, Toast.LENGTH_LONG).show();
+        // Toast.makeText(this, "Test Completed \n Score : " + MainActivity.testScore, Toast.LENGTH_LONG).show();
         buildDialog();
     }
 

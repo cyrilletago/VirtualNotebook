@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,13 +20,14 @@ import android.widget.Toast;
 
 import java.util.Locale;
 
-public class WordDetail extends AppCompatActivity implements View.OnClickListener{
+public class WordDetail extends AppCompatActivity implements View.OnClickListener, OnItemSelectedListener{
     ControllerDatabase db =new ControllerDatabase(this);
     BottomNavigationView navigation;
     SQLiteDatabase database;
     EditText Word_en, Word_fr, Category;
     Button Submitdatabtn,Showdatabtn;
     String wordGotEn, wordGotFr, categoryGot;
+    Spinner mySpinner;
 
     TextToSpeech t1;
     ImageView b1;
@@ -45,13 +48,23 @@ public class WordDetail extends AppCompatActivity implements View.OnClickListene
             }
         });*/
 
-        Spinner mySpinner = (Spinner) findViewById(R.id.etCategory);
+        mySpinner = (Spinner) findViewById(R.id.etCategory);
 
         ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(WordDetail.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.names));
         myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mySpinner.setAdapter(myAdapter);
+
         Word_en = (EditText) findViewById(R.id.etText_eng);
+
+        Word_en.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v.getId() == Word_en.getId()){
+                    Word_en.setCursorVisible(true);
+                }
+            }
+        });
 
         /*Word_en.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -74,7 +87,9 @@ public class WordDetail extends AppCompatActivity implements View.OnClickListene
         if (MainActivity.wordSelected)
         {
             String categoryWord = getIntent().getStringExtra("CATEGORY_TO_PASS");
-            Category.setText(categoryWord);
+            int spinnerPosition = myAdapter.getPosition(categoryWord);
+            mySpinner.setSelection(spinnerPosition);
+            // Category.setText(categoryWord);
 
             String englishWordClicked = getIntent().getStringExtra("ENGLISH_WORD_TO_PASS");
             Word_en.setText(englishWordClicked);
@@ -99,7 +114,7 @@ public class WordDetail extends AppCompatActivity implements View.OnClickListene
             @Override
             public void onClick(View v) {
                 String toSpeak = Word_fr.getText().toString();
-                Toast.makeText(getApplicationContext(), toSpeak,Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getApplicationContext(), toSpeak,Toast.LENGTH_SHORT).show();
                 t1.speak(toSpeak,TextToSpeech.QUEUE_FLUSH,null);
             }
         });
@@ -117,6 +132,14 @@ public class WordDetail extends AppCompatActivity implements View.OnClickListene
 
     }
 
+    public void onItemSelected(AdapterView<?> parent, View view,
+                               int pos, long id) {
+    }
+
+    public void onNothingSelected(AdapterView<?> parent) {
+        // Another interface callback
+    }
+
     @Override
     public void onClick(View v)
     {
@@ -124,25 +147,31 @@ public class WordDetail extends AppCompatActivity implements View.OnClickListene
         {
             wordGotEn = Word_en.getText().toString().trim();
             wordGotFr = Word_fr.getText().toString().trim();
-            categoryGot = Category.getText().toString().trim();
+            // categoryGot = Category.getText().toString().trim();
+            categoryGot = mySpinner.getSelectedItem().toString();
 
             if (!isAlpha(wordGotEn) || wordGotEn.isEmpty() ||
                             !isAlpha(wordGotFr) || wordGotFr.isEmpty() ||
-                                    !isAlpha(categoryGot) || categoryGot.isEmpty())
+                                    !isAlpha(categoryGot) || mySpinner.getSelectedItemPosition() == 0)
             {
-                Toast.makeText(this,"Invalid Entry",Toast.LENGTH_LONG).show();
+                Toast.makeText(this,"Invalid Entry: Make sure you select a category",Toast.LENGTH_LONG).show();
 
             }else if(isAlreadyInDatabase(wordGotEn)){
-                  Toast.makeText(this, wordGotEn + " already in the database. Edit it.", Toast.LENGTH_LONG).show();
+                database = db.getWritableDatabase();
+                database.execSQL("UPDATE LanguageDetails " +
+                                    "SET FrenchWord = '" + wordGotFr + "', Category = '" + categoryGot +
+                                        "' WHERE EnglishWord = '" + wordGotEn + "' ");
+                  Toast.makeText(this, wordGotEn + " has been updated in the database.", Toast.LENGTH_LONG).show();
             }else {
                 database = db.getWritableDatabase();
-                database.execSQL("INSERT INTO LanguageDetails(EnglishWord,FrenchWord,Category)VALUES('" + Word_en.getText() + "','" + Word_fr.getText() + "','" + Category.getText() + "')");
+                database.execSQL("INSERT INTO LanguageDetails(EnglishWord,FrenchWord,Category)VALUES('" + wordGotEn + "','" + wordGotFr + "','" + categoryGot + "')");
                 Toast.makeText(this, "Saved", Toast.LENGTH_LONG).show();
 
                 // Clear the entered text after saving to the database
                 Word_en.setText("");
                 Word_fr.setText("");
-                Category.setText("");
+                mySpinner.setSelection(0);
+                // Category.setText("");
             }
         }
         else  if(v.getId()==R.id.btnShow)
@@ -152,6 +181,7 @@ public class WordDetail extends AppCompatActivity implements View.OnClickListene
 
         }
     }
+
 
     public boolean isAlpha(String s){
         String pattern= "^[a-zA-Z]*$";
@@ -177,12 +207,8 @@ public class WordDetail extends AppCompatActivity implements View.OnClickListene
                         startActivity(intent);
                         break;
                     case R.id.navigation_add:
-                        //Do some thing here
-                        // Intent intent_add = new Intent(WordDetail.this, WordDetail.class);
-                        // startActivity(intent_add);
                         break;
                     case R.id.navigation_test:
-                        //Do some thing here
                         Intent intent_test = new Intent(WordDetail.this, Test.class);
                         // intent_test.putExtra("PREPARED_WORD_FOR_TEST", MainActivity.indexCheckWordlist.get(0));
                         startActivity(intent_test);
