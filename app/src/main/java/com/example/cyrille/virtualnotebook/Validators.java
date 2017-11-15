@@ -7,7 +7,7 @@ package com.example.cyrille.virtualnotebook;
 public class Validators {
 
     public boolean isAlpha(String s){
-        String pattern= "^[a-zA-Zéèà]*$";
+        String pattern= "^[a-zA-Zéèàç]*$";
         return s.matches(pattern);
     }
 

@@ -123,8 +123,10 @@ public class CategoryChosen extends AppCompatActivity{
             } while (cursor.moveToNext());
         }
         //code to set adapter to populate list
-         newListAdapter = new ArrayAdapter<String>(this, R.layout.layout, categorisedEnglishList);
-         lv.setAdapter(newListAdapter);
+        //newListAdapter = new ArrayAdapter<String>(this, R.layout.layout, categorisedEnglishList);
+        //lv.setAdapter(newListAdapter);
+        SpecialAdapter adapter = new SpecialAdapter(this, R.layout.layout, categorisedEnglishList);
+        lv.setAdapter(adapter);
         cursor.close();
 
 
@@ -216,6 +218,8 @@ public class CategoryChosen extends AppCompatActivity{
         new_cursor.close();
          db.close();
     }
+
+
 
 
 }

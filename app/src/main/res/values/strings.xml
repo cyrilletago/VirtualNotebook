@@ -21,6 +21,9 @@
     <string name="category_six">Others</string>
     <string name="quest_msg">What is the french translation of:  </string>
     <string name="test_word">Test word</string>
+    <string name="overflow_import">Import List</string>
+    <string name="overflow_export">Export List</string>
+
 
 
     <string-array name="names">

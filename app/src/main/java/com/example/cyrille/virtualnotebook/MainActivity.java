@@ -6,11 +6,14 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,6 +21,11 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -130,6 +138,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_overflow, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_export:
+                // Export list of words to the csv file
+                // exportDBwordList();
+                return true;
+            case R.id.menu_import:
+                // Green item was selected
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+
     private void displayData() {
         english_list.clear();
         db = controllerDatabase.getReadableDatabase();
@@ -146,8 +176,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             } while (cursor.moveToNext());
         }
         //code to set adapter to populate list
-         newListAdapter = new ArrayAdapter<String>(this, R.layout.layout, english_list);
-         lv.setAdapter(newListAdapter);
+        //newListAdapter = new ArrayAdapter<String>(this, R.layout.layout, english_list);
+        //lv.setAdapter(newListAdapter);
+        SpecialAdapter adapter = new SpecialAdapter(this, R.layout.layout, english_list);
+        lv.setAdapter(adapter);
+
         cursor.close();
 
 
@@ -211,6 +244,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    // Displaying the clicked word with its french translation
+
     public void displayClickedWordDetails(String clickedWord) {
         // We will extract our words into this array
         String[] extractedData;
@@ -245,6 +280,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          db.close();
     }
 
+    // Alphabetic side list display
+
     private void getIndexList(String[] English_list) {
         mapIndex = new LinkedHashMap< String, Integer>();
         for (int j = 0; j < English_list.length; j++) {
@@ -274,4 +311,57 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         lv.setSelection(mapIndex.get(selectedIndex.getText()));
     }
 
+    private void exportDBwordList(){
+        db = controllerDatabase.getReadableDatabase(); //My Database class
+        try
+        {
+            Cursor cursor = db.rawQuery("SELECT * from LanguageDetails", null);
+            int rowcount = 0;
+            int colcount = 0;
+            File sdCardDir = Environment.getExternalStorageDirectory();
+            String filename = "csvWordList.csv";
+            // the name of the file to export with
+            File saveFile = new File(sdCardDir, filename);
+            FileWriter fw = new FileWriter(saveFile);
+
+            BufferedWriter bufferedWriter = new BufferedWriter(fw);
+            rowcount = cursor.getCount();
+            colcount = cursor.getColumnCount();
+            if (rowcount > 0) {
+                cursor.moveToFirst();
+
+                for (int i = 0; i < colcount; i++) {
+                    if (i != colcount - 1) {
+
+                        bufferedWriter.write(cursor.getColumnName(i) + ",");
+
+                    } else {
+
+                        bufferedWriter.write(cursor.getColumnName(i));
+                    }
+                }
+                bufferedWriter.newLine();
+                for (int i = 0; i < rowcount; i++) {
+                    cursor.moveToPosition(i);
+
+                    for (int j = 0; j < colcount; j++) {
+                        if (j != colcount - 1)
+                            bufferedWriter.write(cursor.getString(j) + ",");
+                        else
+                            bufferedWriter.write(cursor.getString(j));
+                    }
+                    bufferedWriter.newLine();
+                }
+                bufferedWriter.flush();
+                Toast.makeText(this, "DB Exported!", Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception ex) {
+            if (db.isOpen()) {
+                db.close();
+                Toast.makeText(this, "Something is wrong!", Toast.LENGTH_LONG).show();
+                Log.e("SOMETHING_IS_WRONG",ex.getMessage().toString() );
+            }
+        } finally {
+        }
+    }
 }
