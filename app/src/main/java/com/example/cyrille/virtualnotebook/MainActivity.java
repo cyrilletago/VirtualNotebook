@@ -63,6 +63,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         testScore = 0;
         lv = (ListView) findViewById(R.id.lstvw);
 
+        //getListView().setFastScrollEnabled(true);
+
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
